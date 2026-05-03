@@ -44,6 +44,11 @@ class MediaUnderstanding:
             添加了 description 的 MediaObject 对象（原对象修改）
         """
         try:
+            # 检查是否有原始数据
+            if media.raw_data is None:
+                logger.warning(f"Media at ({media.anchor_row}, {media.anchor_col}) has no raw_data")
+                return media
+
             # 构建提示词
             messages = [
                 {
@@ -84,13 +89,13 @@ class MediaUnderstanding:
         results = await asyncio.gather(*tasks, return_exceptions=True)
 
         # 处理异常结果
-        processed_results = []
+        processed_results: List[MediaObject] = []
         for i, result in enumerate(results):
             if isinstance(result, Exception):
                 logger.warning(f"Failed to process media {i}: {result}")
                 # 保持原始 MediaObject，description 为 None
                 processed_results.append(media_objects[i])
-            else:
+            elif isinstance(result, MediaObject):
                 processed_results.append(result)
 
         logger.info(f"Processed {len(processed_results)} media objects")
@@ -113,7 +118,9 @@ class MediaUnderstanding:
         # 收集所有 MediaObject
         all_media = []
 
+        assert workbook.sheets is not None  # __post_init__ 确保此字段不为 None
         for sheet in workbook.sheets:
+            assert sheet.cells is not None  # __post_init__ 确保此字段不为 None
             for row in sheet.cells:
                 for cell in row:
                     if hasattr(cell, "embedded_media") and cell.embedded_media is not None:

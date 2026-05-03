@@ -139,6 +139,10 @@ class OpenAICompatibleClient(ModelClient):
             # 提取生成的文本
             content = response_data["choices"][0]["message"]["content"]
 
+            # 类型断言：确保 content 是字符串
+            if not isinstance(content, str):
+                raise TableParsingError(f"Invalid response content type: {type(content)}")
+
             logger.debug(f"Received response: {len(content)} chars")
 
             return content

@@ -89,7 +89,7 @@ class MediaExtractor:
         Returns:
             MediaObject 列表
         """
-        media_objects = []
+        media_objects: List[MediaObject] = []
 
         # 检查工作表是否包含图片
         if not hasattr(sheet, "_images") or not sheet._images:
@@ -148,19 +148,23 @@ class MediaExtractor:
         Returns:
             图片字节数据，如果获取失败则返回 None
         """
+        result: bytes | None = None
         try:
             # openpyxl Image 对象的 _data() 方法返回原始字节数据
             if hasattr(img, "_data"):
-                return img._data()
+                data = img._data()
+                if isinstance(data, bytes):
+                    result = data
             # 备选方法：通过 ref 属性访问
             elif hasattr(img, "ref"):
-                return img.ref
+                ref = img.ref
+                if isinstance(ref, bytes):
+                    result = ref
             else:
                 logger.warning("Image object has no _data or ref attribute")
-                return None
         except Exception as e:
             logger.warning(f"Failed to extract image raw data: {e}")
-            return None
+        return result
 
     def _detect_image_format(self, raw_data: bytes) -> str:
         """

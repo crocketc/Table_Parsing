@@ -18,7 +18,7 @@ class MediaObject:
     description: Optional[str] = None
     chart_metadata: Optional[dict[str, Any]] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """验证 type 字段必须是 'image' 或 'chart'"""
         if self.type not in ("image", "chart"):
             raise ValueError(
@@ -27,7 +27,7 @@ class MediaObject:
 
     def to_dict(self) -> dict[str, Any]:
         """转换为 dict，bytes 转 base64"""
-        result = {
+        result: dict[str, Any] = {
             "type": self.type,
             "anchor_row": self.anchor_row,
             "anchor_col": self.anchor_col,
@@ -58,7 +58,7 @@ class Cell:
     style: Optional[dict[str, Any]] = None
     embedded_media: Optional[MediaObject] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """验证 data_type 字段必须是有效值"""
         valid_types = {"number", "string", "date", "bool", "blank"}
         if self.data_type not in valid_types:
@@ -111,15 +111,16 @@ class Sheet:
     hidden: bool = False
     max_row: int = 0
     max_col: int = 0
-    cells: list[list[Cell]] = None
+    cells: list[list[Cell]] | None = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """初始化 cells 为空列表（如果为 None）"""
         if self.cells is None:
             self.cells = []
 
     def to_dict(self) -> dict[str, Any]:
         """转换为 dict，递归序列化 cells"""
+        assert self.cells is not None  # __post_init__ 确保此字段不为 None
         return {
             "name": self.name,
             "hidden": self.hidden,
@@ -133,10 +134,10 @@ class Sheet:
 class Workbook:
     """工作簿数据"""
 
-    metadata: dict[str, Any] = None
-    sheets: list[Sheet] = None
+    metadata: dict[str, Any] | None = None
+    sheets: list[Sheet] | None = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """初始化默认值"""
         if self.metadata is None:
             self.metadata = {}
@@ -145,6 +146,7 @@ class Workbook:
 
     def to_dict(self) -> dict[str, Any]:
         """转换为 dict，递归序列化 sheets"""
+        assert self.sheets is not None  # __post_init__ 确保此字段不为 None
         return {
             "metadata": self.metadata,
             "sheets": [sheet.to_dict() for sheet in self.sheets],

@@ -17,6 +17,11 @@ dependencies = [
     "httpx>=0.24.0",
 ]
 
+[project.optional-dependencies]
+type-stubs = [
+    "types-openpyxl>=2024.0.0",
+]
+
 [tool.setuptools.packages.find]
 where = ["src"]
 

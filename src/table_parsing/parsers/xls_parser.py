@@ -4,7 +4,7 @@ XLS 格式解析器
 
 import datetime as dt
 from pathlib import Path
-from typing import Union, Optional
+from typing import Union, Optional, Any, Literal
 
 import xlrd
 
@@ -26,12 +26,12 @@ class XLSParser(BaseParser):
     XL_CELL_BOOLEAN = 4
     XL_CELL_BLANK = 6
 
-    def __init__(self):
+    def __init__(self) -> None:
         """初始化解析器"""
         self._workbook: Optional[Workbook] = None
 
     @staticmethod
-    def _map_xlrd_type(xlrd_type: int) -> str:
+    def _map_xlrd_type(xlrd_type: int) -> Literal["number", "string", "date", "bool", "blank"]:
         """
         将 xlrd 单元格类型映射到 IR data_type
 
@@ -41,14 +41,14 @@ class XLSParser(BaseParser):
         Returns:
             IR data_type 字符串
         """
-        type_mapping = {
+        type_mapping: dict[int, Literal["number", "string", "date", "bool", "blank"]] = {
             XLSParser.XL_CELL_NUMBER: "number",
             XLSParser.XL_CELL_TEXT: "string",
             XLSParser.XL_CELL_DATE: "date",
             XLSParser.XL_CELL_BOOLEAN: "bool",
             XLSParser.XL_CELL_BLANK: "blank",
         }
-        return type_mapping.get(xlrd_type, "string")
+        return type_mapping.get(xlrd_type, "string")  # type: ignore[return-value]
 
     def parse(self, file_path: Union[str, Path]) -> Workbook:
         """
@@ -231,12 +231,12 @@ class XLSParser(BaseParser):
 
     def _convert_cell_value(
         self,
-        xl_value: any,
+        xl_value: Any,
         xl_type: int,
         xl_sheet: xlrd.sheet.Sheet,
         row_idx: int,
         col_idx: int
-    ) -> any:
+    ) -> Any:
         """
         转换单元格值到 IR 格式
 

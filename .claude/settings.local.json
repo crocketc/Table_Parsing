@@ -15,7 +15,13 @@
       "Bash(pytest *)",
       "Bash(git reset *)",
       "Bash(grep -E \"\\\\\\\\.py$\")",
-      "Bash(dir C:vibe_codingTable_Parsingtests *)"
+      "Bash(dir C:vibe_codingTable_Parsingtests *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\vibe_coding\\\\Table_Parsing\\\\src\\\\table_parsing\" -Recurse -Filter \"*.py\")",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(mypy *)",
+      "Bash(radon *)",
+      "Bash(openspec list *)",
+      "Bash(Select-String -Pattern \"test session starts|collected|warnings\" -Context 0,2)"
     ]
   }
 }

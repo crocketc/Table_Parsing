@@ -55,10 +55,12 @@ class CSVParser(BaseParser):
         sheet_name = path.stem
 
         # 获取所有 chunk 并合并到一个 Workbook 中
-        sheets = []
+        sheets: list[Sheet] = []
         for chunk_sheet in self.parse_chunked(file_path, sheet_name=sheet_name):
             if sheets:
                 # 如果已经有 sheet，将后续 chunk 的数据合并到第一个 sheet
+                assert sheets[0].cells is not None  # __post_init__ 确保此字段不为 None
+                assert chunk_sheet.cells is not None
                 sheets[0].cells.extend(chunk_sheet.cells)
                 sheets[0].max_row = len(sheets[0].cells)
             else:
@@ -261,7 +263,8 @@ class CSVParser(BaseParser):
 
         # 使用 csv.Sniffer 检测分隔符
         try:
-            dialect = csv.Sniffer().sniff(sample, delimiters=self.SUPPORTED_DELIMITERS)
+            delimiter_str = ''.join(self.SUPPORTED_DELIMITERS)
+            dialect = csv.Sniffer().sniff(sample, delimiters=delimiter_str)
             return dialect.delimiter
         except (csv.Error, ValueError):
             # 如果检测失败，默认使用逗号
