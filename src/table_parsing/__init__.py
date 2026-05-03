@@ -14,6 +14,7 @@ from .exceptions import (
     UnsupportedFormatError,
 )
 from .ir import MediaObject
+from .model_client import ModelClient, OpenAICompatibleClient
 
 __version__ = "0.1.0"
 
@@ -26,6 +27,8 @@ __all__ = [
     "MediaObject",
     "ModelApiConfig",
     "ParseConfig",
+    "ModelClient",
+    "OpenAICompatibleClient",
     "__version__",
     # 公共 API
     "parse_file",
