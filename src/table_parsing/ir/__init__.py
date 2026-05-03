@@ -3,6 +3,6 @@
 IR (Intermediate Representation) 数据模型
 """
 
-from .model import MediaObject
+from .model import Cell, MediaObject
 
-__all__ = ["MediaObject"]
+__all__ = ["Cell", "MediaObject"]
