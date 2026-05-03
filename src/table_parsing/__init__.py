@@ -5,6 +5,7 @@ Table Parsing IR - 统一的表格文件解析库
 将 CSV/XLS/XLSX 文件转换为纯 Python dataclass 中间表示。
 """
 
+from .config import ModelApiConfig, ParseConfig
 from .exceptions import (
     FileFormatMismatchError,
     FileProtectedError,
@@ -23,6 +24,8 @@ __all__ = [
     "FileProtectedError",
     "ParseError",
     "MediaObject",
+    "ModelApiConfig",
+    "ParseConfig",
     "__version__",
 ]
 
