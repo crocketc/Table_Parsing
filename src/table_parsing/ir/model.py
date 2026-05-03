@@ -101,3 +101,51 @@ class Cell:
             result["embedded_media"] = self.embedded_media.to_dict()
 
         return result
+
+
+@dataclass
+class Sheet:
+    """工作表数据"""
+
+    name: str
+    hidden: bool = False
+    max_row: int = 0
+    max_col: int = 0
+    cells: list[list[Cell]] = None
+
+    def __post_init__(self):
+        """初始化 cells 为空列表（如果为 None）"""
+        if self.cells is None:
+            self.cells = []
+
+    def to_dict(self) -> dict[str, Any]:
+        """转换为 dict，递归序列化 cells"""
+        return {
+            "name": self.name,
+            "hidden": self.hidden,
+            "max_row": self.max_row,
+            "max_col": self.max_col,
+            "cells": [[cell.to_dict() for cell in row] for row in self.cells],
+        }
+
+
+@dataclass
+class Workbook:
+    """工作簿数据"""
+
+    metadata: dict[str, Any] = None
+    sheets: list[Sheet] = None
+
+    def __post_init__(self):
+        """初始化默认值"""
+        if self.metadata is None:
+            self.metadata = {}
+        if self.sheets is None:
+            self.sheets = []
+
+    def to_dict(self) -> dict[str, Any]:
+        """转换为 dict，递归序列化 sheets"""
+        return {
+            "metadata": self.metadata,
+            "sheets": [sheet.to_dict() for sheet in self.sheets],
+        }
