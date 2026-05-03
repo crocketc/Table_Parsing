@@ -12,6 +12,7 @@ from .exceptions import (
     TableParsingError,
     UnsupportedFormatError,
 )
+from .ir import MediaObject
 
 __version__ = "0.1.0"
 
@@ -21,6 +22,7 @@ __all__ = [
     "FileFormatMismatchError",
     "FileProtectedError",
     "ParseError",
+    "MediaObject",
     "__version__",
 ]
 

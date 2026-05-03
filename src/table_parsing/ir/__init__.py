@@ -3,5 +3,6 @@
 IR (Intermediate Representation) 数据模型
 """
 
-# 将在后续任务中添加
-# from .model import Workbook, Sheet, Cell, MediaObject
+from .model import MediaObject
+
+__all__ = ["MediaObject"]
