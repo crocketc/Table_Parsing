@@ -27,9 +27,13 @@ __all__ = [
     "ModelApiConfig",
     "ParseConfig",
     "__version__",
+    # 公共 API
+    "parse_file",
+    "Workbook",
+    "Sheet",
+    "Cell",
 ]
 
-# 公共 API 将在后续任务中添加
-# from .engine import parse_file
-# from .config import ParseConfig, ModelApiConfig
-# from .ir.model import Workbook, Sheet, Cell, MediaObject
+# 公共 API
+from .engine import parse_file
+from .ir.model import Cell, MediaObject, Sheet, Workbook

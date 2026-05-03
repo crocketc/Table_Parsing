@@ -14,7 +14,8 @@
       "Bash(pytest tests/test_exceptions.py -v)",
       "Bash(pytest *)",
       "Bash(git reset *)",
-      "Bash(grep -E \"\\\\\\\\.py$\")"
+      "Bash(grep -E \"\\\\\\\\.py$\")",
+      "Bash(dir C:vibe_codingTable_Parsingtests *)"
     ]
   }
 }

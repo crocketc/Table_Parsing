@@ -6,6 +6,8 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Union
 
+from ..ir.model import Workbook
+
 
 class BaseParser(ABC):
     """
@@ -15,12 +17,15 @@ class BaseParser(ABC):
     """
 
     @abstractmethod
-    def parse(self, file_path: Union[str, Path]) -> None:
+    def parse(self, file_path: Union[str, Path]) -> Workbook:
         """
         解析表格文件
 
         Args:
             file_path: 文件路径，可以是字符串或 Path 对象
+
+        Returns:
+            Workbook: 解析后的工作簿对象
 
         Raises:
             FileNotFoundError: 文件不存在
