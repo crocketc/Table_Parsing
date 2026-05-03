@@ -21,6 +21,15 @@ dependencies = [
 type-stubs = [
     "types-openpyxl>=2024.0.0",
 ]
+cli = [
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    "pyyaml>=6.0",
+]
+all = ["table-parsing-ir[cli,type-stubs]"]
+
+[project.scripts]
+table-parse = "table_parsing.cli:app"
 
 [tool.setuptools.packages.find]
 where = ["src"]

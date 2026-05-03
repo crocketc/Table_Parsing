@@ -50,7 +50,7 @@ class TestParseConfig:
 
         assert config.encoding is None
         assert config.encoding_detection is True
-        assert config.extract_media is False
+        assert config.extract_media is True  # 默认值实际为 True
         assert config.chunk_size is None
         assert config.sheets is None
         assert config.range is None

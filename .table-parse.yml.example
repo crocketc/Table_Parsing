@@ -1,0 +1,33 @@
+# 表格解析 CLI 配置文件
+# 复制此文件为 .table-parse.yml 并根据需要修改
+
+# 文件编码（留空表示自动检测）
+encoding: null
+
+# 是否提取嵌入的媒体文件
+extract_media: true
+
+# 指定要解析的工作表（留空表示解析所有）
+sheets: null
+# sheets:
+#   - "Sheet1"
+#   - "Sheet2"
+
+# 解析范围（如 "A1:B10"）
+range: null
+
+# 输出格式：json/yaml/csv
+output_format: json
+
+# 是否格式化输出
+pretty: true
+
+# 模型 API 配置
+model_api:
+  base_url: "http://169.254.83.107:1234"
+  model: "qwen3.5-4b"
+  api_key: ""
+  max_concurrency: 6
+
+# 日志级别：DEBUG/INFO/WARNING/ERROR
+log_level: "INFO"
