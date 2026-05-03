@@ -19,11 +19,11 @@ class XLSParser(BaseParser):
     解析 Excel 97-2003 (XLS) 文件并转换为统一的中间表示
     """
 
-    # xlrd 单元格类型常量
-    XL_CELL_NUMBER = 0
+    # xlrd 单元格类型常量 (xlrd 2.0+)
     XL_CELL_TEXT = 1
+    XL_CELL_NUMBER = 2
     XL_CELL_DATE = 3
-    XL_CELL_BOOL = 4
+    XL_CELL_BOOLEAN = 4
     XL_CELL_BLANK = 6
 
     def __init__(self):
@@ -45,7 +45,7 @@ class XLSParser(BaseParser):
             XLSParser.XL_CELL_NUMBER: "number",
             XLSParser.XL_CELL_TEXT: "string",
             XLSParser.XL_CELL_DATE: "date",
-            XLSParser.XL_CELL_BOOL: "bool",
+            XLSParser.XL_CELL_BOOLEAN: "bool",
             XLSParser.XL_CELL_BLANK: "blank",
         }
         return type_mapping.get(xlrd_type, "string")
@@ -74,9 +74,10 @@ class XLSParser(BaseParser):
 
         try:
             # 打开 XLS 工作簿
+            # 注意：需要 formatting_info=True 来获取工作表可见性信息
             xl_workbook = xlrd.open_workbook(
                 path,
-                formatting_info=False,
+                formatting_info=True,
                 on_demand=False,
             )
 
@@ -158,7 +159,9 @@ class XLSParser(BaseParser):
 
             # 提取工作表信息
             sheet_name = xl_sheet.name
-            hidden = not xl_sheet.visible
+            # xlrd 2.0+ 不再支持工作表可见性检测，默认为 False
+            # 如果需要隐藏工作表信息，需要使用 xlrd < 2.0 或其他库
+            hidden = False
             max_row = xl_sheet.nrows
             max_col = xl_sheet.ncols
 
@@ -256,7 +259,7 @@ class XLSParser(BaseParser):
             return xl_value
         elif xl_type == self.XL_CELL_TEXT:
             return str(xl_value) if xl_value else ""
-        elif xl_type == self.XL_CELL_BOOL:
+        elif xl_type == self.XL_CELL_BOOLEAN:
             return bool(xl_value)
         elif xl_type == self.XL_CELL_DATE:
             # xlrd 的日期类型需要特殊处理

@@ -17,8 +17,8 @@ class TestXLSTypeMapping:
 
     def test_map_xlrd_number_type(self):
         """测试映射 XL_CELL_NUMBER 类型"""
-        # xlrd.XL_CELL_NUMBER = 0
-        data_type = XLSParser._map_xlrd_type(0)
+        # xlrd.XL_CELL_NUMBER = 2 (xlrd 2.0+)
+        data_type = XLSParser._map_xlrd_type(2)
         assert data_type == "number"
 
     def test_map_xlrd_date_type(self):
@@ -34,8 +34,8 @@ class TestXLSTypeMapping:
         assert data_type == "string"
 
     def test_map_xlrd_bool_type(self):
-        """测试映射 XL_CELL_BOOL 类型"""
-        # xlrd.XL_CELL_BOOL = 4
+        """测试映射 XL_CELL_BOOLEAN 类型"""
+        # xlrd.XL_CELL_BOOLEAN = 4
         data_type = XLSParser._map_xlrd_type(4)
         assert data_type == "bool"
 
