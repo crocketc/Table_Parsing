@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(openspec new *)",
+      "Bash(openspec status *)",
+      "Bash(openspec instructions *)",
+      "Bash(python *)",
+      "Bash(not exist *)",
+      "PowerShell($env:PYTHONPATH=\"C:\\\\vibe_coding\\\\Table_Parsing\\\\src\"; python -c \"import table_parsing; print\\(table_parsing.__version__\\)\")",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(pip install *)"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+pyproject.toml
+src/table_parsing/__init__.py
+src/table_parsing/ir/__init__.py
+src/table_parsing/parsers/__init__.py
+src/table_parsing_ir.egg-info/PKG-INFO
+src/table_parsing_ir.egg-info/SOURCES.txt
+src/table_parsing_ir.egg-info/dependency_links.txt
+src/table_parsing_ir.egg-info/requires.txt
+src/table_parsing_ir.egg-info/top_level.txt
