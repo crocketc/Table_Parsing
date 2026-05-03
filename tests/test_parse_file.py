@@ -31,7 +31,8 @@ class TestParseFile:
         assert isinstance(workbook, Workbook)
         assert workbook.sheets is not None
         assert len(workbook.sheets) == 1
-        assert workbook.sheets[0].name == "test.csv"
+        # Sheet 名称现在使用文件名（不含扩展名）
+        assert workbook.sheets[0].name == "test"
 
     def test_parse_xlsx_file(self, tmp_path):
         """测试解析 XLSX 文件（跳过，因为 XLSX 解析器已实现）"""

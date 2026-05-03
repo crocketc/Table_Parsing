@@ -42,12 +42,7 @@ def create_xls_with_merged_cells(file_path: Path) -> None:
     workbook = xlwt.Workbook()
     sheet = workbook.add_sheet("Sheet1")
 
-    # 添加标题行
-    sheet.write(0, 0, "Sales Report")
-    sheet.write(0, 1, "Sales Report")
-    sheet.write(0, 2, "Sales Report")
-
-    # 合并第一行
+    # 合并第一行作为标题
     sheet.write_merge(0, 0, 0, 2, "Sales Report")
 
     # 添加表头
