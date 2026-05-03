@@ -44,4 +44,6 @@ class FileProtectedError(TableParsingError):
 class ParseError(TableParsingError):
     """通用解析错误"""
 
-    pass
+    def __init__(self, message: str):
+        self.message = message
+        super().__init__(message)
