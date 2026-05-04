@@ -28,6 +28,86 @@ cd Table_Parsing
 pip install -e .
 ```
 
+## CLI 命令行工具
+
+项目提供了命令行工具 `table-parse`，方便直接运行解析而无需编写 Python 代码。
+
+### 安装 CLI 工具
+
+```bash
+# 安装 CLI 工具（包含额外依赖）
+pip install -e ".[cli]"
+```
+
+### 基础用法
+
+```bash
+# 解析 CSV 文件
+table-parse data.csv
+
+# 解析 Excel 文件
+table-parse report.xlsx
+
+# 输出到文件
+table-parse data.xlsx --output result.json
+
+# 指定输出格式（JSON/YAML/CSV）
+table-parse data.csv --format yaml
+```
+
+### 配置文件
+
+CLI 工具支持配置文件 `.table-parse.yml`，按以下优先级加载：
+
+1. 命令行 `--config` 指定的文件
+2. 当前目录的 `.table-parse.yml`
+3. 当前目录的 `table-parse.yml`
+4. 用户主目录的 `.table-parse.yml`
+
+**生成配置文件模板**：
+
+```bash
+table-parse --init-config
+```
+
+**配置文件示例**：
+
+```yaml
+# 输出格式：json/yaml/csv
+output_format: json
+
+# 是否格式化输出
+pretty: true
+
+# 文件编码（留空表示自动检测）
+encoding: null
+
+# 指定要解析的工作表（留空表示解析所有）
+sheets: null
+# sheets:
+#   - "Sheet1"
+#   - "Sheet2"
+
+# 日志级别：DEBUG/INFO/WARNING/ERROR
+log_level: "INFO"
+```
+
+### 高级用法
+
+```bash
+# 显示当前配置
+table-parse --show-config
+
+# 显示配置文件路径
+table-parse --show-config-path
+
+# 命令行参数覆盖配置文件
+table-parse data.csv --encoding utf-8 --format yaml
+
+# 详细输出模式
+table-parse data.xlsx --verbose
+```
+
 ## 快速开始
 
 ### 解析 CSV 文件
